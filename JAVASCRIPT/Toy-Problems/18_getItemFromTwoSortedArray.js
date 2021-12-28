@@ -116,25 +116,18 @@ const getItemFromTwoSortedArrays1 = function (arr1, arr2, k) {
   // 크다면 mid-1로 범위를 좁힌다.
   // 반복을 한다.
 
-  let mid = 0;
+  //!
 
-  if (arr1.length <= arr2.length) {
-    mid = Math.floor(arr1.length / 2);
-    getCount(arr2, num, arr1.length + arr2.length);
+  let [head, mid, tail] = [0, 0, 0];
+  let [len1, len2] = [Math.floor(arr1.length / 2), Math.floor(arr2.length / 2)];
+  mid = len1 >= len2 ? len1 : len2;
+
+  while (head > tail) {
+    //mid가 몇  번째인지 구한다.
   }
+};
 
-  getCount();
-};
-//? 매개변수 num이 몇 번째 숫자인지 얻어내는 메서드
-const getCount = (arr, num, len) => {
-  // num의 arr의 마지막 인자부터 시작해서 대소비교
-  let count = 0;
-  for (let i = 0; i < arr.length; i++)
-    if (arr[len - 1 - i] >= num) count++;
-    else break;
-  return len - count;
-};
-//! test
+//test;
 // let arr1 = [1, 4, 8, 10];
 // let arr2 = [2, 3, 5, 9];
 // let result = getItemFromTwoSortedArrays(arr1, arr2, 6);
