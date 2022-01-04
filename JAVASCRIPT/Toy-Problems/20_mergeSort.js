@@ -21,8 +21,12 @@ const mergeSort = function (arr) {
   // 두 변수를 merge (split(L2),split(R2))
 
   const merge = (left, right) => {
+    // ? 두 개의 배열을 받아서 오름차순으로 정렬을 하고 병합하는 함수
     let [leftIdx, rightIdx] = [0, 0];
     let result = [];
+
+    // left 또는 right 가 다 돌면 반복을 끝낸다.
+    // 아직 다 돌지 않은 배열은 제일 끝에 추가한다 (어차피 제일 큰 값을일 것이므로)
 
     while (leftIdx < left.length && rightIdx < right.length) {
       if (left[leftIdx] < right[rightIdx]) {
@@ -35,11 +39,31 @@ const mergeSort = function (arr) {
     }
     // 둘 중 idx가 남는다면 나머지를 result의 뒤에 붙인다.
     if (leftIdx < left.length) result.push(...left.slice(leftIdx));
-    else if (rightIdx < right) result.push(...right.slice(rightIdx));
+    else if (rightIdx < right.length) result.push(...right.slice(rightIdx));
 
     return result;
   };
+
+  const mergeSplit = (arr) => {
+    //? 한 개의 배열을 입력받아 두 개의 배열로 분할하는 함수
+
+    // arr의 길이가 1이라면 배열을 바로 반환한다.
+    if (arr.length <= 1) return arr;
+
+    // 배열을 나눌 기준이 되는 중간 값을 구한다
+    const mid = Math.floor(arr.length / 2);
+    // arr을 mid로 기준으로 나눈 두 개의 배열의 길이를 mergesplit으로 다시 재귀적으로 분할한다.
+    const [left, right] = [
+      mergeSplit(arr.slice(0, mid)),
+      mergeSplit(arr.slice(mid)),
+    ];
+
+    // left와 right을 병합한 결과를 return 한다.
+    return merge(left, right);
+  };
+
+  return mergeSplit(arr);
 };
 
 let output = mergeSort([3, 1, 21]);
-console.log(output); // --> [1, 3, 21]ㄴ
+console.log(output); // --> [1, 3, 21]
