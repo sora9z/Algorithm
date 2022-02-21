@@ -54,7 +54,6 @@ N	  |   stages                 |	result
 
 */
 
-// failRate= 스테이지에 도달했으나 아직 클리어하지 못한 플레이어의 수 / 스테이지에 도달한 플레이어 수
 function solution(N, stages) {
   var answer = [];
   let sum = 0;
@@ -65,14 +64,17 @@ function solution(N, stages) {
       this.failureRate = failureRate;
     }
   }
+
   let nodes = []; // node들을 넣을 배열
 
+  // 각  stage에 있는 사람의 수를 count
   let counts = new Array(N + 2).fill(0);
   stages.forEach((el) => {
     counts[el] += 1; // 각 index의 중복 check
     sum += 1; // 전체 sum을 구함
   });
 
+  // 각 stage의 failureRate를 구한다.
   for (let i = 0; i < counts.length - 1; i++) {
     if (i === 0) continue;
     if (counts[i] === 0) nodes.push(new Node(i, 0));
