@@ -70,6 +70,9 @@ function movingStuff(stuff, limit) {
   return boxCount;
 }
 
+// 위의 방법의 경우 pop과 shift보다는 max와 min을 가리키는 Index를 사용하면 더 깔끔하다
+// 이런 경우 while의 조건은 left index < right Index 로 하면 된다
+
 let output = movingStuff([70, 50, 80, 50], 100);
 console.log(output); // 3
 
