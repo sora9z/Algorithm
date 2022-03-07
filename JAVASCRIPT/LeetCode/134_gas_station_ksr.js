@@ -50,7 +50,7 @@ let canCompleteCircuit1 = function (gas, cost) {
   let truck = 0;
 
   while (start < len) {
-    start = getStartIdx(start + 1);
+    start = getStartIdx(start + 1); // Start를 할 index를 찾는 과정
     truck = gas[start];
     let index = start;
 
@@ -58,6 +58,7 @@ let canCompleteCircuit1 = function (gas, cost) {
       if (truck - cost[index] >= 0) {
         truck -= cost[index];
         if (index >= len - 1) index = 0;
+        // index가 0을 넘어가면 0으로 초기화
         else index++;
         truck += gas[index];
       } else {
@@ -87,6 +88,7 @@ let canCompleteCircuit2 = function (gas, cost) {
   let truck = 0;
   i = start;
   let count = 0;
+
   while (start < len) {
     truck += sum[i];
     if (truck < 0) {
@@ -110,6 +112,7 @@ let canCompleteCircuit = function (gas, cost) {
   let start = -1;
   let truck = 0;
   let temp = 0;
+  //
   for (let i = 0; i < len; i++) {
     if (temp + gas[i] - cost[i] >= 0) {
       temp += gas[i] - cost[i];
@@ -125,7 +128,7 @@ let canCompleteCircuit = function (gas, cost) {
 
 //! test
 
-// console.log(canCompleteCircuit([1, 2, 3, 4, 5], [3, 4, 5, 1, 2])); // 3
-// console.log(canCompleteCircuit([2], [2])); // -1
+console.log(canCompleteCircuit([1, 2, 3, 4, 5], [3, 4, 5, 1, 2])); // 3
+console.log(canCompleteCircuit([2], [2])); // -1
 console.log(canCompleteCircuit([2, 3, 4], [3, 4, 3]));
 console.log(canCompleteCircuit([3, 1, 1], [1, 2, 2]));

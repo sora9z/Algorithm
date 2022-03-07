@@ -8,7 +8,7 @@ limit = 한 번에 들어갈 수 있는 무게100kg 일 때
 // 방법 1 sort 후 진행
 // 방법 2 그떄 그때 진행
 
-function movingStuff(stuff, limit) {
+function movingStuff2(stuff, limit) {
   // Todo 매 순간의 최선의 선택 -> 매 순간마다 최소 값을 limit에서 빼본다.
   // stuff를 오름차순으로 정렬한다.
   // stuff의 길이가 0이 아닐 떄까지 반복문을 돌린다.
@@ -42,6 +42,32 @@ function movingStuff(stuff, limit) {
     count += getBoxCount(stuff);
   }
   return count;
+}
+
+function movingStuff(stuff, limit) {
+  // --- HA 준비 풀이 --
+  // sort를 하여 작은 순으로 정렬을 한다
+  // max 와 min을 한 개씩 뽑는다.
+  // if max+min <= limit =>  box ++
+  // max, min 다시 poop
+  // else max만 상자에 넣는다 box ++
+  // max 다시 pop
+
+  stuff.sort((a, b) => a - b);
+  let boxCount = 0;
+  let [max, min] = [0, 0];
+  while (stuff.length) {
+    [max, min] = [stuff[0], stuff[stuff.length - 1]];
+    if (max + min <= limit) {
+      boxCount++;
+      stuff.pop();
+      stuff.shift();
+    } else {
+      boxCount++;
+      stuff.pop();
+    }
+  }
+  return boxCount;
 }
 
 let output = movingStuff([70, 50, 80, 50], 100);
