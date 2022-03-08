@@ -23,13 +23,62 @@ Number 타입을 반환한다.
 [ [1, 10], [1, 1111], [10, 1], [10, 1111], [1111, 1], [1111, 10] ]을 반환해야 합니다.
 */
 
+//! 다시 풀어봄 . 개선사항 -> data 전처리 코드 regex 사용 -> 간략화  , dfs 코드 정리
+// 데이터 처리 -> 03개 이상인 인자 삭제
+// Error Handling -> 배열의 길이가 choiceNum보다 작으면 출력 빈 배열
+// dfs(arr,depth)
+//  for to stuffArr
+//  if isValid(elem)
+//    if(choiceNum===1)
+//      result.push(arr.concat(elem))  return
+//    else -> dfs(arr.concat(elem),choiceNum--)
+// return result
 function newChickenRecipe(stuffArr, choiceNum) {
+  // sort
+  stuffArr.sort((a, b) => a - b);
+  const newStuffArr = [];
+
+  // data 전처리
+  stuffArr.forEach((ingred) => {
+    let machCheck = ingred.toString().match(/[0]+/g);
+    let zeroCount = machCheck ? machCheck.join("").length : 1;
+
+    if (zeroCount < 3) {
+      newStuffArr.push(ingred);
+    }
+  });
+
+  // Error Handling
+  if (newStuffArr.length < choiceNum) return [];
+
+  let result = [];
+
+  // dfs
+  const dfs = (arr, isValid, depth) => {
+    for (let i = 0; i < newStuffArr.length; i++) {
+      let elem = newStuffArr[i];
+      if (!isValid[i]) {
+        if (depth === 1) {
+          result.push(arr.concat(elem));
+        }
+        isValid[i] = 1;
+        dfs(arr.concat(elem), isValid, depth - 1);
+        isValid[i] = 0;
+      }
+    }
+  };
+  let isValid = new Array(newStuffArr.length).fill(0);
+  dfs([], isValid, choiceNum);
+  return result;
+}
+
+function newChickenRecipe1(stuffArr, choiceNum) {
   // TODO 이 문제는 순서가 상관있는 순열 개념을 사용한 문제.
   const newStuff = getNewStuffs(stuffArr); // 0이 3개 이상이면 제외하는 배열
   const result = [];
   if (newStuff.length < choiceNum) return result;
 
-  //? 순열 dfs
+  //? 순열 df
   const dfs = (depth, visited, arr) => {
     arr = arr ?? [];
     let len = newStuff.length;

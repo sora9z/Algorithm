@@ -10,7 +10,7 @@ arr.length는 3이다.
 최종적으로 return 되는 배열의 순서는 가중치 적용 정렬(Weight Sort)을 따른다. 
 중요도는 'rock','paper','scissors' 순으로 높다.
 */
-//! 다시 풀어봄 더 간겨
+//! 다시 풀어봄 더 간결
 function rockPaperScissors(depth) {
   //  depth가 0이 될 떄까지 def를 진행한다
   // depth가 0이라면 result에 배열을 push하고 return 한다.
