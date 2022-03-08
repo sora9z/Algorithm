@@ -19,7 +19,7 @@ output : Number type 반환
 - 주의사할 : 말이 board 바깥으로 나가면 OUT을 return 한다.
 */
 
-function boardGame(board, operation) {
+function boardGame1(board, operation) {
   // Todo
 
   // position 을 가리키는 length=2인 배열을 선언한다 초기값은 0,0
@@ -56,6 +56,27 @@ function boardGame(board, operation) {
     }
   }
   return score;
+}
+
+function boardGame(board, operation) {
+  const DIR = {
+    U: [0, -1],
+    D: [0, 1],
+    R: [1, 0],
+    L: [-1, 0],
+  };
+
+  const isValid = (x, y) => {
+    if (x < 0 || x > board.length || y < 0 || y > board[0].length) return false;
+    else true;
+  };
+
+  let score = 0;
+  let [x, y] = [0, 0];
+  for (let dir of operation) {
+    x += DIR[dir][0];
+    y += DIR[dir][1];
+  }
 }
 
 const board1 = [

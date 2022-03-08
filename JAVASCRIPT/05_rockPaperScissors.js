@@ -10,8 +10,28 @@ arr.length는 3이다.
 최종적으로 return 되는 배열의 순서는 가중치 적용 정렬(Weight Sort)을 따른다. 
 중요도는 'rock','paper','scissors' 순으로 높다.
 */
-
+//! 다시 풀어봄 더 간겨
 function rockPaperScissors(depth) {
+  //  depth가 0이 될 떄까지 def를 진행한다
+  // depth가 0이라면 result에 배열을 push하고 return 한다.
+  let result = [];
+  const dfs = (depth, arr) => {
+    const rps = ["rock", "paper", "scissors"];
+    for (let elem of rps) {
+      if (depth === 1) {
+        result.push([...arr, elem]);
+      } else {
+        dfs(depth - 1, [...arr, elem]);
+      }
+    }
+  };
+  depth = depth ?? 3;
+
+  dfs(depth, []);
+  return result;
+}
+
+function rockPaperScissors1(depth) {
   //Todo 이 문제는 DFS 문제 같다
   // rock paper sicssors가 중요도 별로 들어있는 배열을 선언한다
 
@@ -22,7 +42,7 @@ function rockPaperScissors(depth) {
   return result;
 }
 
-const dfs = (depth, result, count, arr) => {
+const dfs1 = (depth, result, count, arr) => {
   count = count ?? 1;
   arr = arr ?? [];
   const rps = ["rock", "paper", "scissors"];
@@ -48,7 +68,8 @@ const dfs = (depth, result, count, arr) => {
   return true;
 };
 
-let output = rockPaperScissors(5);
+// test
+let output = rockPaperScissors();
 
 console.log(output);
 /*
