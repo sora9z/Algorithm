@@ -6,8 +6,32 @@ A빼뺴로가 4개 B빼뺴로가 8개인 경우, 직원이 2명 이라면 A 뺴�
 output[i]는 [빼빼로를 받게 되는 직원의 수, 나누어 주는 아몬드 빼빼로의 수, 나누어 주는 누드 빼빼로의 수] 의 인자를 갖고있는 길이 3의 배열이다
 output[i][0]을 기준으로 오름차순으로 정렬한다.
 */
+const getGcd = (m, n) => {
+  // 유클리드호제법을 사용한다.
+  // 유클리드 호제법이란 두 수의 최대공약수를 구한는 알고리즘으로 MOD연산을 진행한다.
+  // 큰 수를 작은수로 나눈 나머지로 나눳던 수와 다시 MOD연산을 진핸하는 방식
+  // 나머지가 0이 나오면 나눈 수가 최대공약수가 된다
+  if (m % n === 0) return n;
+  return getGcd(n, m % n);
+};
 
 function divideChocolateStick(M, N) {
+  let result = [];
+  // GCD 를 구하고
+  // GCD의 제곱근 만큼 반복을 진행한다. -> 제곱근보다 큰 경우와 작은 경우는 서로 곱하면 제곱수가 나오므로
+  let GCD = getGcd(Math.max(M, N), Math.min(M, N));
+
+  for (let i = 1; i * i <= GCD; i++) {
+    if (GCD % i === 0) {
+      result.push([i, M / i, N / i]);
+      let right = GCD / i;
+      result.push([right, M / right, N / right]);
+    }
+  }
+  return result.sort((a, b) => a[0] - b[0]);
+}
+
+function divideChocolateStick2(M, N) {
   // TODO:이 문제는 직원 수, A뺴뱨로, B빼빼로의 최대공양수로 나누는 문제이므로 GCD 문제
   // Todo: 먼저 M과 N중에 최솟값의 약수를 구한다.
   // Todo : n의 약수는 루트n보다 작은 수의 약수를 먼저 구하고 나머지 약수는 구한 약수를 나누어 계산한다.
@@ -23,7 +47,7 @@ function divideChocolateStick(M, N) {
   return result;
 }
 
-const getDivisors = (num) => {
+const getDivisors2 = (num) => {
   let result = [];
   for (let i = 1; i * i <= num; i++)
     // i가 제곱근이면 i만 배열에 넣어주고 아니라면 i와 n을 i로 나눈 값도 넣어준다
@@ -33,7 +57,7 @@ const getDivisors = (num) => {
   return result.sort((a, b) => a - b);
 };
 
-function divideChocolateStick2(M, N) {
+function divideChocolateStick1(M, N) {
   // TODO:이 문제는 직원 수, A뺴뱨로, B빼빼로의 최대공양수로 나누는 문제이므로 GCD 문제
 
   // for i=1 to 직원 수
@@ -53,11 +77,12 @@ function divideChocolateStick2(M, N) {
 }
 
 //! test
-let M = 20;
-let N = 10;
-let output = divideChocolateStick(M, N);
-console.log(output);
+// let M = 20;
+// let N = 10;
+// let output = divideChocolateStick(M, N);
+// console.log(output);
 // [[1, 4, 8], [2, 2, 4], [4, 1, 2]]
 
 // let output2 = divideChocolateStick(1000000000, 1000000000);
 // console.log(output2);
+console.log(divideChocolateStick(8, 10));
